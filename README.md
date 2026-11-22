@@ -1,8 +1,8 @@
 # YouTube Patches (for Morphe)
 
-Community patches for **YouTube** (`com.google.android.youtube`) built for **Morphe** (`morphe-patcher 2.4.0`), covering privacy, forced-update bypass, screenshot/recording enablement, and UI customization.
+Community patches for **YouTube** (`com.google.android.youtube`) built for **Morphe** (`morphe-patcher 2.4.0`), covering privacy, forced-update bypass, screenshot/recording enablement, haptic feedback control, playback speed persistence, and UI customization.
 
-> **Note on server-enforced features:** These patches modify client-side behavior only. YouTube Premium entitlements, Widevine L1 DRM, age-gated content, background playback, and server-side recommendations (e.g. "Ask YouTube" / Gemini) are enforced server-side and cannot be bypassed by client patches.
+> **Note on server-enforced features:** These patches modify client-side behavior only. YouTube Premium entitlements, Widevine L1 DRM, age-gated content, background playback, and server-side features (e.g. "Ask YouTube" / Gemini AI) are enforced server-side and cannot be bypassed by client patches.
 
 ## Supported Target
 
@@ -39,12 +39,6 @@ Community patches for **YouTube** (`com.google.android.youtube`) built for **Mor
 | --- | --- | --- |
 | `Hide Shorts components` | Disabled | Hides Shorts shelf, tab, and creation button from the UI. |
 
-### Development / Custom Endpoint
-
-| Patch | Default | Description |
-| --- | --- | --- |
-| `Custom Innertube endpoint (docs)` | N/A | Documents how to use a custom Innertube API endpoint via the existing `PPG` enum value (`http://127.0.0.1:8787`). Run a local proxy on that port, or modify via ADB. Full Settings UI requires a Morphe extension (not included). See `patches/src/main/kotlin/app/morphe/patches/youtube/misc/CustomEndpointDocs.kt`. |
-
 ## Building
 
 Requires JDK 17+.
@@ -57,19 +51,6 @@ Outputs:
 
 - Bundle: `patches/build/libs/patches-0.1.0.mpp`
 - Catalog: `patches-list.json`
-
-## Testing
-
-### Android (Morphe Manager 2.6.0+)
-1. Sources → + → paste this repository URL
-2. Select your `com.google.android.youtube` APK/APKM
-3. Enable desired patches and patch
-
-### Desktop (morphe-desktop-2.3.0-all.jar)
-```bash
-java -jar morphe-desktop-2.3.0-all.jar patch --validate patches-0.1.0.mpp
-java -jar morphe-desktop-2.3.0-all.jar patch patches-0.1.0.mpp input.apk output.apk
-```
 
 ## License
 
