@@ -1,0 +1,7 @@
+{
+  "created_at": "2026-11-21T23:59:00",
+  "description": "YouTube Patches v0.1.0 — privacy, interaction, and layout patches for YouTube 21.46.523 compatible with Morphe 2.4.0. Includes: Disable Firebase Analytics + AD_ID perms, Bypass forced update, Allow screenshots/recording, Bypass consent dialog, Disable haptic feedback, Force default playback speed, Hide Shorts components.",
+  "download_url": "https://github.com/YOUR_USERNAME/Morphe-YouTube-Patches/releases/download/v0.1.0/patches-0.1.0.mpp",
+  "signature_download_url": "",
+  "version": "0.1.0"
+}
