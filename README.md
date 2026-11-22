@@ -39,6 +39,12 @@ Community patches for **YouTube** (`com.google.android.youtube`) built for **Mor
 | --- | --- | --- |
 | `Hide Shorts components` | Disabled | Hides Shorts shelf, tab, and creation button from the UI. |
 
+### Development / Custom Endpoint
+
+| Patch | Default | Description |
+| --- | --- | --- |
+| `Custom Innertube endpoint (docs)` | N/A | Documents how to use a custom Innertube API endpoint via the existing `PPG` enum value (`http://127.0.0.1:8787`). Run a local proxy on that port, or modify via ADB. Full Settings UI requires a Morphe extension (not included). See `patches/src/main/kotlin/app/morphe/patches/youtube/misc/CustomEndpointDocs.kt`. |
+
 ## Building
 
 Requires JDK 17+.
