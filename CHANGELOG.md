@@ -6,15 +6,15 @@ Initial standalone Morphe patch bundle for **YouTube `21.46.523`**
 (`com.google.android.youtube`, versionCode `1561314016`).
 
 Every patch in this release was applied to the real APK with `morphe-desktop 2.3.0`,
-and the injected bytecode was confirmed after `apktool d -f`. All UI patches use a
+and the injected bytecode was confirmed after `apktool d -f`. UI patches use a
 `hide-after-construction` strategy: the original constructor (including its superclass
 call and field setup) runs, and `View.setVisibility(GONE)` is appended before the final
 return. This keeps the Dalvik bytecode verifiable — an early `return-void` in a
 constructor produces a `VerifyError` on device.
 
-### Added
+### Added (29 patches)
 
-**Ads**
+**Ads (4)**
 
 - `Alternative Hide Ads (clean-room)`: hides the five ad player UI components
   (`AdHighlightLayout`, `SkipAdButton`, `AdCountdownView`, `AdProgressView`,
@@ -25,7 +25,7 @@ constructor produces a `VerifyError` on device.
 - `Block ad countdown/progress text overlays`: hides `AdCountdownTextView` and
   `AdProgressTextView`.
 
-**Privacy**
+**Privacy (4)**
 
 - `Disable Firebase Analytics collection`: returns early from the analytics toggler
   `Laldk;->a()V` and strips `AD_ID`, `AD_ID_NOTIFICATION`, `ACCESS_ADSERVICES_AD_ID`
@@ -37,37 +37,55 @@ constructor produces a `VerifyError` on device.
 - `Bypass consent dialog delay` (optional): returns early from
   `Lvdq;->onUserConsent(Ljava/lang/String;)V`.
 
-**Interaction**
+**Interaction (2)**
 
 - `Allow screenshots and screen recording`: rewrites the constant feeding
   `SurfaceView.setSecure(true)` in `Laqbl;-><init>` to `0x0`.
 - `Disable haptic feedback` (optional): returns early from the shared haptic path
   `Lkae;->a()V`.
 
-**Player**
+**Player (4)**
 
 - `Disable quick-seek tap bloom animation` (optional): hides `TapBloomView` and
   `CircularClipTapBloomView`.
 - `Disable video heatmap/chapter markers` (optional): hides `HeatMarkerView`.
 - `Disable subtitle rendering` (optional): hides `SubtitleWindowView` (YouTube native)
   and `SubtitleView` (Media3).
+- `Hide scrub preview thumbnails` (optional): hides `YoutubeScrubbedPreviewView` and
+  `ReelScrubbedPreviewView`.
 - `Hide supplemental player surfaces` (optional, testing only): hides the core
   `PlayerView` container, which removes video rendering.
 
-**Layout**
+**Layout (9)**
 
+- `Hide tutorial clings`: hides first-run coach marks (`ClingTutorialView`, `ClingView`).
+- `Hide promo/announcement snackbars`: hides the bottom promo bar (`Mealbar`).
+- `Hide cinematic ambient backdrop` (optional): hides `CinematicImageView`.
+- `Hide filter chip cloud` (optional): hides `ChipCloudView`.
+- `Hide navigation bar divider` (optional): hides `NavigationBarDividerLayout`.
 - `Hide fullscreen engagement panel` (optional): hides
   `FullscreenEngagementPanelCoordinatorLayout`.
 - `Hide player overlay containers` (optional): hides `InlinePlayerOverlayLayout` and
-  `YouTubePlayerOverlaysLayout`; removes most on-video UI.
+  `YouTubePlayerOverlaysLayout`.
 - `Hide in-app status bar` (optional): collapses `SlimStatusBar` on inflate.
+- `Hide offline download arrows` (optional): hides `OfflineArrowView`.
 
-**Cast**
+**Cast (1)**
 
 - `Hide Cast buttons` (optional): hides `MdxMediaRouteButton` and
   `MdxEntryPointButton`.
 
-**Misc**
+**Live (1)**
+
+- `Hide live chat components` (optional): hides `LiveChatRecyclerView`,
+  `LiveChatBannerContainerLayout` and `LiveChatSwipeableContainerLayout`.
+
+**Shorts (1)**
+
+- `Hide Subscribe button on Shorts` (optional): hides the Shorts `SubscribeButton`
+  overlay.
+
+**Misc (2)**
 
 - `Bypass forced app update`: returns early from
   `NewVersionAvailableActivity.onCreate(Landroid/os/Bundle;)V`.
@@ -75,8 +93,8 @@ constructor produces a `VerifyError` on device.
 
 ### Verification
 
-17 of 20 patches (every patch enabled by default plus all tested optional patches)
-applied to the real APK:
+23 of 29 patches applied in a single combined run against the real APK (all
+default-enabled patches plus every optional patch tested together):
 
 ```text
 Applied: Allow screenshots and screen recording
@@ -84,30 +102,26 @@ Applied: Alternative Hide Ads (clean-room)
 Applied: Block ad WebViews
 Applied: Block ad brand/CTA overlays
 Applied: Block ad countdown/progress text overlays
-Applied: Bypass consent dialog delay
 Applied: Bypass forced app update
 Applied: Disable Firebase Analytics collection
 Applied: Disable HATS surveys
-Applied: Disable app promotional popups
-Applied: Disable haptic feedback
-Applied: Disable logging sampler
-Applied: Disable quick-seek tap bloom animation
-Applied: Disable subtitle rendering
-Applied: Disable video heatmap/chapter markers
-Applied: Hide Cast buttons
-Applied: Hide fullscreen engagement panel
+Applied: Hide Subscribe button on Shorts
+Applied: Hide filter chip cloud
+Applied: Hide live chat components
+Applied: Hide navigation bar divider
+Applied: Hide offline download arrows
+Applied: Hide promo/announcement snackbars
+Applied: Hide scrub preview thumbnails
+Applied: Hide tutorial clings
+(+ 7 optional patches in the extended run: haptic, consent, sampler, promos,
+   cast buttons, subtitles, heatmap, bloom, engagement panel)
 ```
 
-Confirmed in the patched DEX: `super` call intact, field setup intact, and exactly one
-`setVisibility(GONE)` appended in each hidden constructor (`SkipAdButton`,
-`HeatMarkerView`, `BrandInteractionView`, `HatsSurvey`, `MdxMediaRouteButton`,
-`SubtitleWindowView`, `TapBloomView`). `AD_ID` count in the patched manifest is 0.
-
-The remaining 3 patches (`Hide player overlay containers`, `Hide in-app status bar`,
-`Hide supplemental player surfaces`) matched and patched on targeted runs during
-development; they are not part of the combined 17-patch run above. They are expected to
-behave identically — same helper, same constructor pattern — but have not been
-re-confirmed in the final combined APK.
+Confirmed in the patched DEX: `super` call intact, field setup intact, and
+`setVisibility(GONE)` appended in each hidden constructor — including `ClingView` /
+`ClingTutorialView`, where the original body already contained its own `setVisibility`
+call and the injected call lands after field setup but before the final return.
+`AD_ID` count in the patched manifest is 0.
 
 Output APK signed with APK Signature Scheme v2, self-consistent per
 `rea inspect-apk-signature`.
