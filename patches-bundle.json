@@ -1,6 +1,6 @@
 {
-  "created_at": "2026-11-22T02:30:00",
-  "description": "YouTube Patches v0.1.0 — 6 client-side patches for YouTube 21.46.523, validated by patching the real APK with morphe-desktop 2.3.0. Ads (ad UI constructors), Privacy (Firebase Analytics + AD_ID permissions, consent dialog), Interaction (screenshots/recording, haptic feedback), Misc (forced update bypass).",
+  "created_at": "2026-11-22T03:30:00",
+  "description": "YouTube Patches v0.1.0 — 20 client-side patches for YouTube 21.46.523, validated against the real APK with morphe-desktop 2.3.0. UI patches hide components after construction (verifiable bytecode); non-view patches return early from telemetry, consent, haptic and forced-update paths.",
   "download_url": "https://github.com/stivencop414-bot/Morphe-YouTube-Patches/releases/download/v0.1.0/patches-0.1.0.mpp",
   "signature_download_url": "",
   "version": "0.1.0"
