@@ -18,11 +18,7 @@ internal const val CONSENT_WEBVIEW_DESCRIPTOR = "Lvdq;"
 internal object ConsentWebViewFingerprint : Fingerprint(
     definingClass = CONSENT_WEBVIEW_DESCRIPTOR,
     name = "onUserConsent",
-    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
+    accessFlags = listOf(AccessFlags.PUBLIC),
     returnType = "V",
     parameters = listOf("Ljava/lang/String;"),
-    filters = listOf(
-        methodCall(definingClass = "Lvdn;", name = "a"),
-        methodCall(definingClass = "Lvdo;", name = "a"),
-    ),
 )

@@ -15,6 +15,6 @@ val disableHapticFeedbackPatch = patch(
     compatibleWith(*AppCompatibilities.youtube())
 
     execute {
-        HapticFeedbackPerformFingerprint.method.returnEarly(false)
+        HapticFeedbackPerformFingerprint.method.returnEarly()
     }
 }

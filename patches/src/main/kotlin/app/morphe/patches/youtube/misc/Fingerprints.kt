@@ -37,6 +37,9 @@ internal object FirebaseCollectionToggleFingerprint : Fingerprint(
  * Observed: `invoke-super ... Lizm;->onCreate`, `Lrd;->setContentView(I)`, then
  * `Intent.getParcelableExtra("forward_intent")` and
  * `Intent.getBooleanExtra("show_force_upgrade", false)`.
+ *
+ * Note: method-call filters on Intent are intentionally omitted here because this
+ * activity's superclass also references them; class + name + signature are unique.
  */
 internal object NewVersionActivityOnCreateFingerprint : Fingerprint(
     definingClass = NEW_VERSION_ACTIVITY_DESCRIPTOR,
@@ -44,11 +47,6 @@ internal object NewVersionActivityOnCreateFingerprint : Fingerprint(
     accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.FINAL),
     returnType = "V",
     parameters = listOf("Landroid/os/Bundle;"),
-    filters = listOf(
-        methodCall(definingClass = "Landroid/content/Intent;", name = "getParcelableExtra"),
-        methodCall(definingClass = "Landroid/content/Intent;", name = "getBooleanExtra"),
-        string("show_force_upgrade"),
-    ),
 )
 
 /**
