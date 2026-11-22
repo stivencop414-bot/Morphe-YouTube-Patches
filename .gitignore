@@ -20,3 +20,6 @@ local.properties
 *.jks
 morphe-signing.key
 work/
+
+# Scripts
+create_release.sh
